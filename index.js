@@ -63,7 +63,7 @@ app.post('/web-data', async(req, res) => {
       id: queryId,
       title: 'Победа',
       input_message_content: {message_text: "Хороший выбор, покупка прошла успешно! Ваша общая сумма составляет: " + totalPrice +
-      ". Свяжитесь с @Lojin для дальнейших указаний"}
+      ". Свяжитесь с @ILojin для дальнейших указаний."}
     })
     return res.status(200).json({});
   }
@@ -72,7 +72,7 @@ app.post('/web-data', async(req, res) => {
       type: 'article',
       id: queryId,
       title: 'Ошибка',
-      input_message_content: {message_text: "ВЫшла ошибочка, не удалось приобрести товар. Свяжитесь с @Lojin для дальнейших указаний"}
+      input_message_content: {message_text: "ВЫшла ошибочка, не удалось приобрести товар. Свяжитесь с @ILojin для дальнейших указаний."}
       
     })
     return res.status(505).json({});
