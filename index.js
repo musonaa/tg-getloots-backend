@@ -160,7 +160,7 @@ bot.on('message', async (msg) => {
       const data = JSON.parse(msg?.web_app_data?.data);
 
       // Save to database
-      const query = 'INSERT INTO form_data (email, password, subject) VALUES (?, ?, ?)';
+      const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
       pool.execute(query, [data.email, data.password, data.subject], (err, results) => {
         if (err) {
           console.error('Error inserting data:', err);
@@ -183,7 +183,7 @@ app.post('/web-data', async (req, res) => {
   const { email, password, subject } = req.body;
   console.log('Received data:', req.body); // Logging request body
 
-  const query = 'INSERT INTO form_data (email, password, subject) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
   pool.execute(query, [email, password, subject], (err, results) => {
     if (err) {
       console.error('Error inserting data:', err);
