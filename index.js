@@ -105,20 +105,27 @@
 
 
 
-
-
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
+const url = require('url');
 
-// Database connection
+
+const jdbcUrl = 'jdbc:mysql://u402_loX7s1O1wC:oTyAJHorGcvofpy.sKTcTd+9@192.168.1.12:3306/s402_storage';
+const parsedUrl = url.parse(jdbcUrl.replace('jdbc:', ''));
+
+const [username, password] = parsedUrl.auth.split(':');
+const [host, port] = parsedUrl.host.split(':');
+const database = parsedUrl.pathname.substring(1);
+
+
 const pool = mysql.createPool({
-  host: '192.168.1.12',
-  port: '3306',
-  user: 'u402_loX7s1O1wC',
-  password: 'oTyAJHorGcvofpy.sKTcTd+9',
-  database: 's402_storage',
+  host: host,
+  port: port,
+  user: username,
+  password: password,
+  database: database,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -174,6 +181,7 @@ bot.on('message', async (msg) => {
 
 app.post('/web-data', async (req, res) => {
   const { email, password, subject } = req.body;
+  console.log('Received data:', req.body); // Logging request body
 
   const query = 'INSERT INTO form_data (email, password, subject) VALUES (?, ?, ?)';
   pool.execute(query, [email, password, subject], (err, results) => {
@@ -186,5 +194,27 @@ app.post('/web-data', async (req, res) => {
 });
 
 const PORT = 25293;
-
 app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
+
+
+
+
+// const con = mysql.createConnection({
+//   host: '192.168.1.12',
+//   port: '3306',
+//   user: 'u402_loX7s1O1wC',
+//   password: 'oTyAJHorGcvofpy.sKTcTd+9',
+//   database: 's402_storage',
+// });
+
+// con.connect(err=>{
+//   if(err){
+//     console.log(err);
+//     return err;
+//   }
+//   else{
+//     console.log("DATABASE----OK");
+//   }
+// }
+
+// )
