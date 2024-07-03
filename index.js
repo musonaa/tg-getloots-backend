@@ -181,7 +181,7 @@ bot.on('message', async (msg) => {
 
 app.post('/web-data', async (req, res) => {
   const { email, password, subject } = req.body;
-  console.log('Received data:', req.body); // Logging request body
+  console.log('Received data:', req.body); 
 
   const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
   pool.execute(query, [email, password, subject], (err, results) => {
