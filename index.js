@@ -114,7 +114,7 @@ const url = require('url');
 
 const host = '192.168.1.12';
 // const host = '95.163.234.85';
-const port = '3301';
+const port = '3306';
 const username = 'u402_loX7s1O1wC';
 const password = 'oTyAJHorGcvofpy.sKTcTd+9';
 const database = 's402_storage';
