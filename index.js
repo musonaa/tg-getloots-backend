@@ -111,12 +111,10 @@ const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
 const url = require('url');
 
-
 const host = '192.168.1.12';
-// const host = '95.163.234.85';
-const port = '25293';
+const port = '3306';
 const username = 'u402_loX7s1O1wC';
-const password = 'oTyAJHorGcvofpy.sKTcTd+9';
+const password = 'c=.9J3lfnJTt1VwfyMED!w9w';
 const database = 's402_storage';
 
 const pool = mysql.createPool({
