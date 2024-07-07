@@ -111,7 +111,7 @@ const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.json());
+
 
 const host = '192.168.1.12';
 const port = '3306';
@@ -139,6 +139,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
