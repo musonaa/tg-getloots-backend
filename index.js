@@ -112,18 +112,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const url = require('url');
 
 
-// const host = '192.168.1.12';
-const host = '95.163.234.85';
+const host = '192.168.1.12';
+// const host = '95.163.234.85';
 const port = '3301';
 const username = 'u402_loX7s1O1wC';
 const password = 'oTyAJHorGcvofpy.sKTcTd+9';
 const database = 's402_storage';
-
-// const host = 'localhost';
-// const port = '3000';
-// const username = 'u402_loX7s1O1wC';
-// const password = 'oTyAJHorGcvofpy.sKTcTd+9';
-// const database = 's402_storage';
 
 const pool = mysql.createPool({
   host: host,
@@ -208,7 +202,7 @@ pool.getConnection((err, connection) => {
     console.error('Error connecting to the database:', err);
   } else {
     console.log('Connected to the database');
-    // connection.release();
+    connection.release();
   }
 });
 
