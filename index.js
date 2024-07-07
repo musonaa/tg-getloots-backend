@@ -203,14 +203,14 @@ app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
 
 
 
-// pool.getConnection((err, pool) => {
-//   if (err) {
-//     console.error('Error connecting to the database:', err);
-//   } else {
-//     console.log('Connected to the database');
-//     // connection.release();
-//   }
-// });
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+  } else {
+    console.log('Connected to the database');
+    // connection.release();
+  }
+});
 
 
 // const con = mysql.createConnection({
