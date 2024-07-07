@@ -112,17 +112,18 @@ const TelegramBot = require('node-telegram-bot-api');
 const url = require('url');
 
 
-// const jdbcUrl = 'jdbc:mysql://u402_loX7s1O1wC:oTyAJHorGcvofpy.sKTcTd+9@192.168.1.12:3306/s402_storage';
-// const parsedUrl = url.parse(jdbcUrl.replace('jdbc:', ''));
-
-// const [username, password] = parsedUrl.auth.split(':');
-// const [host, port] = parsedUrl.host.split(':');
-// const database = parsedUrl.pathname.substring(1);
-const host = '192.168.1.12';
-const port = '3306';
+// const host = '192.168.1.12';
+const host = '95.163.234.85';
+const port = '3301';
 const username = 'u402_loX7s1O1wC';
 const password = 'oTyAJHorGcvofpy.sKTcTd+9';
 const database = 's402_storage';
+
+// const host = 'localhost';
+// const port = '3000';
+// const username = 'u402_loX7s1O1wC';
+// const password = 'oTyAJHorGcvofpy.sKTcTd+9';
+// const database = 's402_storage';
 
 const pool = mysql.createPool({
   host: host,
@@ -202,14 +203,14 @@ app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
 
 
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to the database');
-    // connection.release();
-  }
-});
+// pool.getConnection((err, pool) => {
+//   if (err) {
+//     console.error('Error connecting to the database:', err);
+//   } else {
+//     console.log('Connected to the database');
+//     // connection.release();
+//   }
+// });
 
 
 // const con = mysql.createConnection({
