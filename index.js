@@ -109,7 +109,9 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const TelegramBot = require('node-telegram-bot-api');
-const url = require('url');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 const host = '192.168.1.12';
 const port = '3306';
@@ -176,9 +178,9 @@ bot.on('message', async (msg) => {
   }
 });
 
-app.post('/web-data', async (req, res) => {
+app.post('/web-data', (req, res) => {
   const { email, password, subject } = req.body;
-  console.log('Received data:', req.body); 
+  console.log('Received data:', req.body);
 
   const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
   pool.execute(query, [email, password, subject], (err, results) => {
@@ -190,7 +192,7 @@ app.post('/web-data', async (req, res) => {
   });
 });
 
-const PORT = 25293;
+const PORT = 3000;
 app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
 
 
