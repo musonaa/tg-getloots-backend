@@ -112,25 +112,25 @@ const TelegramBot = require('node-telegram-bot-api');
 const bodyParser = require('body-parser');
 
 
-// const host = process.env.DB_HOST;
-// const port = process.env.DB_PORT;
-// const username = process.env.DB_USER;
-// const password = process.env.DB_PASSWORD;
-// const database = process.env.DB_DATABASE;
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
+const username = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+const database = process.env.DB_DATABASE;
 
 const webAppUrl = process.env.WEB_APP_URL;
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
-const host = 'localhost';
-// const port = '3000';
-const username = 'root';
-const password = '';
-const database = 'getLoots';
+// const host = 'localhost';
+// // const port = '3000';
+// const username = 'root';
+// const password = '';
+// const database = 'getLoots';
 
 
 const pool = mysql.createPool({
   host: host,
-  // port: port,
+  port: port,
   user: username,
   password: password,
   database: database,
@@ -204,14 +204,14 @@ app.post('/web-data', (req, res) => {
 
 
 
-// pool.getConnection((err, connection) => {
-//   if (err) {
-//     console.error('Error connecting to the database:', err);
-//   } else {
-//     console.log('Connected to the database');
-//     connection.release();
-//   }
-// });
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+  } else {
+    console.log('Connected to the database');
+    connection.release();
+  }
+});
 
 
 // const con = mysql.createConnection({
