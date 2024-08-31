@@ -103,7 +103,7 @@
 // app.listen(PORT, () => console.log('server started on PORT ' + PORT));
 
 
-
+require('dotenv').config();
 
 const express = require('express');
 const mysql = require('mysql');
@@ -112,16 +112,25 @@ const TelegramBot = require('node-telegram-bot-api');
 const bodyParser = require('body-parser');
 
 
+// const host = process.env.DB_HOST;
+// const port = process.env.DB_PORT;
+// const username = process.env.DB_USER;
+// const password = process.env.DB_PASSWORD;
+// const database = process.env.DB_DATABASE;
 
-const host = '192.168.1.12';
-const port = '3306';
-const username = 'u402_loX7s1O1wC';
-const password = 'c=.9J3lfnJTt1VwfyMED!w9w';
-const database = 's402_storage';
+const webAppUrl = process.env.WEB_APP_URL;
+const token = process.env.TELEGRAM_BOT_TOKEN;
+
+const host = 'localhost';
+// const port = '3000';
+const username = 'root';
+const password = '';
+const database = 'getLoots';
+
 
 const pool = mysql.createPool({
   host: host,
-  port: port,
+  // port: port,
   user: username,
   password: password,
   database: database,
@@ -130,9 +139,7 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// Telegram bot setup
-const webAppUrl = 'https://astonishing-pothos-609d9e.netlify.app';
-const token = '7120533023:AAHdqojFMnTdpfMna2e8SAhh2VKETtZy9FQ';
+
 
 const bot = new TelegramBot(token, { polling: true });
 const app = express();
@@ -193,19 +200,18 @@ app.post('/web-data', (req, res) => {
   });
 });
 
-const PORT = 3000;
-app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
+// app.listen(port, () => console.log('Server started on PORT ' + port));
 
 
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to the database');
-    connection.release();
-  }
-});
+// pool.getConnection((err, connection) => {
+//   if (err) {
+//     console.error('Error connecting to the database:', err);
+//   } else {
+//     console.log('Connected to the database');
+//     connection.release();
+//   }
+// });
 
 
 // const con = mysql.createConnection({
