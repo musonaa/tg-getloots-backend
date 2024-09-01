@@ -88,19 +88,19 @@ app.post('/save-cart', (req, res) => {
 });
 
 
-app.post('/web-data', (req, res) => {
-  const { email, password, subject } = req.body;
-  console.log('Received data:', req.body);
+// app.post('/web-data', (req, res) => {
+//   const { email, password, subject } = req.body;
+//   console.log('Received data:', req.body);
 
-  const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
-  pool.execute(query, [email, password, subject], (err, results) => {
-    if (err) {
-      console.error('Error inserting data:', err);
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-    res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
-  });
-});
+//   const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
+//   pool.execute(query, [email, password, subject], (err, results) => {
+//     if (err) {
+//       console.error('Error inserting data:', err);
+//       return res.status(500).json({ message: 'Internal Server Error' });
+//     }
+//     res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
+//   });
+// });
 
 app.post('/test', (req, res) => {
   res.status(200).json({ message: 'Test route is working!' });
