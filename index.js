@@ -31,7 +31,12 @@ const bot = new TelegramBot(token, { polling: true });
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: '*', // Allow all origins
+  methods: 'GET,POST', // Specify allowed methods
+  allowedHeaders: 'Content-Type' // Specify allowed headers
+}))
 app.use(bodyParser.json());
 
 bot.on('message', async (msg) => {
@@ -71,19 +76,17 @@ bot.on('message', async (msg) => {
   }
 });
 
-// app.post('/web-data', (req, res) => {
-//   const { email, password, subject } = req.body;
-//   console.log('Received data:', req.body);
 
-//   const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
-//   pool.execute(query, [email, password, subject], (err, results) => {
-//     if (err) {
-//       console.error('Error inserting data:', err);
-//       return res.status(500).json({ message: 'Internal Server Error' });
-//     }
-//     res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
-//   });
-// });
+app.post('/save-cart', (req, res) => {
+  const { product, totalPrice } = req.body;
+  const message = `New order received!\n\nProducts:\n${product.map(p => `${p.title} - ${p.price} руб`).join('\n')}\n\nTotal Price: ${totalPrice} руб`;
+
+  // Send a message to you (the bot admin) via Telegram
+  bot.sendMessage(process.env.ADMIN_CHAT_ID, message);
+
+  res.status(200).json({ message: 'Cart data saved and sent to Telegram.' });
+});
+
 
 app.post('/web-data', (req, res) => {
   const { email, password, subject } = req.body;
