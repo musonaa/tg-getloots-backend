@@ -197,8 +197,8 @@ app.post('/web-data', (req, res) => {
     res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
   });
 });
-
-app.listen(port, () => console.log('Server started on PORT ' + 3001));
+const PORT =3001;
+app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
 
 
 
