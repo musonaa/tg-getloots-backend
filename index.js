@@ -139,8 +139,6 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-
-
 const bot = new TelegramBot(token, { polling: true });
 const app = express();
 
@@ -200,7 +198,7 @@ app.post('/web-data', (req, res) => {
   });
 });
 
-// app.listen(port, () => console.log('Server started on PORT ' + port));
+app.listen(port, () => console.log('Server started on PORT ' + 3001));
 
 
 
@@ -222,14 +220,9 @@ pool.getConnection((err, connection) => {
 //   database: 's402_storage',
 // });
 
-// con.connect(err=>{
-//   if(err){
-//     console.log(err);
-//     return err;
-//   }
-//   else{
-//     console.log("DATABASE----OK");
-//   }
-// }
+// let query = "SELECT * FROM s402_storage.users";
 
-// )
+// pool.query(query, (err, result, field) =>{
+//   console.log(err);
+//   console.log(result);
+// });
