@@ -43,15 +43,23 @@ bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
 
+  // await bot.sendMessage(chatId, 'Добро пожаловать ');
+
+  // if (text === '/start') {
+  //   await bot.sendMessage(chatId, 'Здесь вы сможете оформить заказ', {
+  //     reply_markup: {
+  //       inline_keyboard: [
+  //         [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
+  //       ]
+  //     }
+  //   });
+  // }
   if (text === '/start') {
-    await bot.sendMessage(chatId, 'Добро пожаловать', {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
-        ]
-      }
-    });
-  }
+    await bot.sendMessage(chatId, 'Дорогой покупатель, добро пожаловать в наш магазин. Мы очень рады видеть вас с нами! Для навигации по чату нажмите /info. ');}
+
+    if(text == '/info'){
+      await bot.sendMessage(chatId, '⇓ Небольшая полезная информация для вас ⇓ \n\n  Для осмотра товаров нажмите на <b>Каталог</b> \n  Также вы можете приоединится к нашему \n  комьюнити нажав сюда⟹ https://t.me/Get_L0ots \n\n  Приятных вам покупок!❤️️', { parse_mode: 'HTML' })
+    }
 
   if (msg?.web_app_data?.data) {
     try {
