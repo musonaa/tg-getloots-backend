@@ -82,7 +82,7 @@ app.post('/save-cart', (req, res) => {
   const message = `New order received from @${username}!\n\nProducts:\n${product.map(p => `${p.title} - ${p.price} руб`).join('\n')}\n\nTotal Price: ${totalPrice} руб`;
 
   // Send a message to you (the bot admin) via Telegram
-  bot.sendMessage(process.env.ADMIN_CHAT_ID, message);
+  bot.sendMessage(process.env.GROUP_CHAT_ID, message);
 
   res.status(200).json({ message: 'Cart data saved and sent to Telegram.' });
 });
