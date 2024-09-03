@@ -16,16 +16,16 @@ const database = process.env.DB_DATABASE;
 const webAppUrl = process.env.WEB_APP_URL;
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
-const pool = mysql.createPool({
-  host: host,
-  port: port,
-  user: username,
-  password: password,
-  database: database,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+// const pool = mysql.createPool({
+//   host: host,
+//   port: port,
+//   user: username,
+//   password: password,
+//   database: database,
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0
+// });
 
 const bot = new TelegramBot(token, { polling: true });
 const app = express();
@@ -38,48 +38,6 @@ app.use(cors({
   allowedHeaders: 'Content-Type' // Specify allowed headers
 }))
 app.use(bodyParser.json());
-
-bot.on('message', async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
-
-  // await bot.sendMessage(chatId, 'Добро пожаловать ');
-
-  // if (text === '/start') {
-  //   await bot.sendMessage(chatId, 'Здесь вы сможете оформить заказ', {
-  //     reply_markup: {
-  //       inline_keyboard: [
-  //         [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
-  //       ]
-  //     }
-  //   });
-  // }
-
-
-  if (msg?.web_app_data?.data) {
-    try {
-      const data = JSON.parse(msg?.web_app_data?.data);
-      const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
-
-      pool.execute(query, [data.email, data.password, data.subject], (err, results) => {
-        if (err) {
-          console.error('Error inserting data:', err);
-          return;
-        }
-        console.log('Data saved with id:', results.insertId);
-      });
-
-      await bot.sendMessage(chatId, 'Спасибо за ваше доверие!');
-      await bot.sendMessage(chatId, 'Ваш имейл: ' + data?.email);
-      await bot.sendMessage(chatId, 'Ваш пароль: ' + data?.password);
-      await bot.sendMessage(chatId, 'Донат в: ' + data?.subject);
-    } catch (e) {
-      console.log(e);
-    }
-
-    
-  }
-});
 
 
 
@@ -202,8 +160,6 @@ bot.on('callback_query', (query) => {
 });
 
 
-
-
 //send message about the order 
 app.post('/save-cart', (req, res) => {
   const {username, product, totalPrice } = req.body;
@@ -245,11 +201,58 @@ app.post('/test', (req, res) => {
 const PORT =25742;
 app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-  } else {
-    console.log('Connected to the database');
-    connection.release();
-  }
-});
+
+
+
+// pool.getConnection((err, connection) => {
+//   if (err) {
+//     console.error('Error connecting to the database:', err);
+//   } else {
+//     console.log('Connected to the database');
+//     connection.release();
+//   }
+// });
+
+
+
+// bot.on('message', async (msg) => {
+//   const chatId = msg.chat.id;
+//   const text = msg.text;
+
+  // await bot.sendMessage(chatId, 'Добро пожаловать ');
+
+  // if (text === '/start') {
+  //   await bot.sendMessage(chatId, 'Здесь вы сможете оформить заказ', {
+  //     reply_markup: {
+  //       inline_keyboard: [
+  //         [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
+  //       ]
+  //     }
+  //   });
+  // }
+
+
+//   if (msg?.web_app_data?.data) {
+//     try {
+//       const data = JSON.parse(msg?.web_app_data?.data);
+//       const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
+
+//       pool.execute(query, [data.email, data.password, data.subject], (err, results) => {
+//         if (err) {
+//           console.error('Error inserting data:', err);
+//           return;
+//         }
+//         console.log('Data saved with id:', results.insertId);
+//       });
+
+//       await bot.sendMessage(chatId, 'Спасибо за ваше доверие!');
+//       await bot.sendMessage(chatId, 'Ваш имейл: ' + data?.email);
+//       await bot.sendMessage(chatId, 'Ваш пароль: ' + data?.password);
+//       await bot.sendMessage(chatId, 'Донат в: ' + data?.subject);
+//     } catch (e) {
+//       console.log(e);
+//     }
+
+    
+//   }
+// });
