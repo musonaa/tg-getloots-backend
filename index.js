@@ -54,12 +54,7 @@ bot.on('message', async (msg) => {
   //     }
   //   });
   // }
-  if (text === '/start') {
-    await bot.sendMessage(chatId, 'Дорогой покупатель, добро пожаловать в наш магазин. Мы очень рады видеть вас с нами! Для навигации по чату нажмите /info. ');}
 
-    if(text == '/info'){
-      await bot.sendMessage(chatId, '⇓ Небольшая полезная информация для вас ⇓ \n\n  Для осмотра товаров нажмите на <b>Каталог</b> \n  Также вы можете приоединится к нашему \n  комьюнити нажав сюда⟹ https://t.me/Get_L0ots \n\n  Приятных вам покупок!❤️️', { parse_mode: 'HTML' })
-    }
 
   if (msg?.web_app_data?.data) {
     try {
@@ -81,10 +76,135 @@ bot.on('message', async (msg) => {
     } catch (e) {
       console.log(e);
     }
+
+    
   }
 });
 
 
+
+
+// bot.onText(/\/start/, (msg) => {
+//   const chatId = msg.chat.id;
+//   const message = `
+// <b>Дорогой покупатель, добро пожаловать в наш магазин. Мы очень рады видеть вас с нами!</b>
+//   `;
+  
+//   const options = {
+//       parse_mode: 'HTML',
+//       disable_web_page_preview: true,
+//       reply_markup: {
+//           inline_keyboard: [
+//               [{ text: '💬 Комьюнити', callback_data: 'community' }],
+//               [{ text: '📋 Дополнительная информация', callback_data: 'info' }],
+//               [{ text: '❓ Помощь', callback_data: 'help' }]
+//           ]
+//       }
+//   };
+  
+//   bot.sendMessage(chatId, message, options);
+// });
+
+
+// bot.on('callback_query', (query) => {
+//   const chatId = query.message.chat.id;
+//   let response = '';
+
+//   switch (query.data) {
+//       case 'community':
+//           response = 'Будем рады видеть вас в нашем сообществе❤️ \n https://t.me/Get_L0ots';
+//           break;
+//       case 'info':
+//           response = 'Информация...';
+//           break;
+//       case 'help':
+//           response = 'За любыми воросами вы можете обращатся к нашему специалисту @1Login. ';
+//           break;
+//   }
+  
+//   bot.sendMessage(chatId, response);
+// });
+
+
+
+
+ 
+const initialMessage = `
+<b>Дорогой покупатель, добро пожаловать в наш магазин. Мы очень рады видеть вас с нами!</b>
+`;
+
+const options = {
+    parse_mode: 'HTML',
+    disable_web_page_preview: true, // Adjust this based on whether you want the link preview
+    reply_markup: {
+        inline_keyboard: [
+          [{ text: '💬 Комьюнити', callback_data: 'community' }],
+          [{ text: '📋 Дополнительная информация', callback_data: 'info' }],
+          [{ text: '❓ Помощь', callback_data: 'help' }]
+        ]
+    }
+};
+
+
+const comLink = `
+Будем рады видеть вас в нашем сообществе❤️ \n https://t.me/Get_L0ots
+`;
+
+const backButtonOptions = {
+    parse_mode: 'HTML',
+    disable_web_page_preview: false, 
+    reply_markup: {
+        inline_keyboard: [
+            [{ text: '🔙 Назад', callback_data: 'go_back' }]
+        ]
+    }
+};
+
+bot.onText(/\/start|\/help/, (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, initialMessage, options);
+});
+
+
+bot.on('callback_query', (query) => {
+    const chatId = query.message.chat.id;
+
+    if (query.data === 'community') {
+
+        bot.editMessageText(comLink, {
+            chat_id: chatId,
+            message_id: query.message.message_id,
+            ...backButtonOptions
+        });
+
+    } else if (query.data === 'help') {
+        const contactSupportMessage = `За любыми воросами вы можете обращатся к нашему специалисту @1Login. `;
+        bot.editMessageText(contactSupportMessage, {
+            chat_id: chatId,
+            message_id: query.message.message_id,
+            ...backButtonOptions
+        });
+    } else if (query.data === 'info') {
+      const contactSupportMessage = `Information.. `;
+      bot.editMessageText(contactSupportMessage, {
+          chat_id: chatId,
+          message_id: query.message.message_id,
+          ...backButtonOptions
+      });
+  }else if (query.data === 'go_back') {
+        // Return to the initial message
+        bot.editMessageText(initialMessage, {
+            chat_id: chatId,
+            message_id: query.message.message_id,
+            ...options
+        });
+    }
+});
+
+
+
+
+//send message about the order 
 app.post('/save-cart', (req, res) => {
   const {username, product, totalPrice } = req.body;
   const message = `New order received from @${username}!\n\nProducts:\n${product.map(p => `${p.title} - ${p.price} руб`).join('\n')}\n\nTotal Price: ${totalPrice} руб`;
@@ -95,24 +215,28 @@ app.post('/save-cart', (req, res) => {
   res.status(200).json({ message: 'Cart data saved and sent to Telegram.' });
 });
 
+//for form data
+// app.post('/web-data', (req, res) => {
+//   const { email, password, subject } = req.body;
+//   console.log('Received data:', req.body);
 
-app.post('/web-data', (req, res) => {
-  const { email, password, subject } = req.body;
-  console.log('Received data:', req.body);
-
-  const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
-  pool.execute(query, [email, password, subject], (err, results) => {
-    if (err) {
-      console.error('Error inserting data:', err);
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-    res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
-  });
-});
+//   const query = 'INSERT INTO users (email, password, subject) VALUES (?, ?, ?)';
+//   pool.execute(query, [email, password, subject], (err, results) => {
+//     if (err) {
+//       console.error('Error inserting data:', err);
+//       return res.status(500).json({ message: 'Internal Server Error' });
+//     }
+//     res.status(200).json({ message: 'Data saved successfully', id: results.insertId });
+//   });
+// });
 
 // app.get('/', (req, res) => {
 //   res.send('Welcome to the GetLoots API');
 // });
+
+
+
+
 
 app.post('/test', (req, res) => {
   res.status(200).json({ message: 'Test route is working!' });
@@ -120,8 +244,6 @@ app.post('/test', (req, res) => {
 
 const PORT =3001;
 app.listen(PORT, () => console.log('Server started on PORT ' + PORT));
-
-
 
 pool.getConnection((err, connection) => {
   if (err) {
