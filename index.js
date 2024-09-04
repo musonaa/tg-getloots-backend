@@ -148,11 +148,12 @@ app.post('/test', (req, res) => {
   res.status(200).json({ message: 'Test route is working!' });
 });
 
-const HOST = '95.163.234.85';
+const HOST = '0.0.0.0';
 const PORT =25742;
 app.listen(PORT, HOST, () => {
     console.log(`Server running at http://${HOST}:${PORT}/`);
 });
+
 
 
 // pool.getConnection((err, connection) => {
