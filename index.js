@@ -140,13 +140,13 @@ app.post('/save-cart', (req, res) => {
 // });
 
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the GetLoots API');
-});
+// app.get('/', (req, res) => {
+//   res.send('Welcome to the GetLoots API');
+// });
 
-app.post('/test', (req, res) => {
-  res.status(200).json({ message: 'Test route is working!' });
-});
+// app.post('/test', (req, res) => {
+//   res.status(200).json({ message: 'Test route is working!' });
+// });
 
 const HOST = '0.0.0.0';
 const PORT =25742;
