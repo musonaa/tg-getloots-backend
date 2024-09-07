@@ -119,6 +119,7 @@ app.post('/save-cart', (req, res) => {
   console.log("Hello World1");
   const message = `New order received from @${username}!\n\nProducts:\n${product}\n\nTotal Price: ${totalPrice} руб`;
   console.log("Hello World2");
+  console.log(req.body);
   // send products
   bot.sendMessage(process.env.GROUP_CHAT_ID, message);
   console.log("Hello World3");
