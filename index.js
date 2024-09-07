@@ -116,12 +116,14 @@ bot.on('callback_query', (query) => {
 //send message about the order 
 app.post('/save-cart', (req, res) => {
   const {username, product, totalPrice } = req.body;
+  console.log("Hello World1");
   const message = `New order received from @${username}!\n\nProducts:\n${product}\n\nTotal Price: ${totalPrice} руб`;
-
+  console.log("Hello World2");
   // send products
   bot.sendMessage(process.env.GROUP_CHAT_ID, message);
-
+  console.log("Hello World3");
   res.status(200).json({ message: 'Cart data saved and sent to Telegram.' });
+  console.log("Hello World4");
 });
 
 //for form data
