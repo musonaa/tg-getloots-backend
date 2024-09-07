@@ -71,10 +71,10 @@ const backButtonOptions = {
     }
 };
 
-bot.onText(/\/start|\/help/, (msg) => {
-    const chatId = msg.chat.id;
-    bot.sendMessage(chatId, initialMessage, options);
-});
+// bot.onText(/\/start|\/help/, (msg) => {
+//     const chatId = msg.chat.id;
+//     bot.sendMessage(chatId, initialMessage, options);
+// });
 
 
 bot.on('callback_query', (query) => {
@@ -116,7 +116,7 @@ bot.on('callback_query', (query) => {
 //send message about the order 
 app.post('/save-cart', (req, res) => {
   const {username, product, totalPrice } = req.body;
-  const message = `New order received from @${username}!\n\nProducts:\n${product.map(p => `${p.title} - ${p.price} руб`).join('\n')}\n\nTotal Price: ${totalPrice} руб`;
+  const message = `New order received from @${username}!\n\nProducts:\n${product}\n\nTotal Price: ${totalPrice} руб`;
 
   // send products
   bot.sendMessage(process.env.GROUP_CHAT_ID, message);
@@ -150,11 +150,12 @@ app.post('/save-cart', (req, res) => {
 //   res.status(200).json({ message: 'Test route is working!' });
 // });
 
-const HOST = '0.0.0.0';
-const PORT =25742;
-app.listen(PORT, HOST, () => {
-    console.log(`Server running at http://${HOST}:${PORT}/`);
-});
+
+// const HOST = '0.0.0.0';
+// const PORT =25742;
+// app.listen(PORT, HOST, () => {
+//     console.log(`Server running at http://${HOST}:${PORT}/`);
+// });
 
 
 
