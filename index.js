@@ -169,22 +169,22 @@ app.listen(PORT, HOST, () => {
 
 
 
-// bot.on('message', async (msg) => {
-//   const chatId = msg.chat.id;
-//   const text = msg.text;
+bot.on('message', async (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-  // await bot.sendMessage(chatId, 'Добро пожаловать ');
+  await bot.sendMessage(chatId, 'Добро пожаловать ');
 
-  // if (text === '/start') {
-  //   await bot.sendMessage(chatId, 'Здесь вы сможете оформить заказ', {
-  //     reply_markup: {
-  //       inline_keyboard: [
-  //         [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
-  //       ]
-  //     }
-  //   });
-  // }
-
+  if (text === '/start') {
+    await bot.sendMessage(chatId, 'Здесь вы сможете оформить заказ', {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: 'Make zakaz', web_app: { url: webAppUrl } }]
+        ]
+      }
+    });
+  }
+});
 
 //   if (msg?.web_app_data?.data) {
 //     try {
