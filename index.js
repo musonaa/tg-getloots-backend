@@ -153,11 +153,11 @@ app.post('/save-cart', (req, res) => {
 // });
 
 
-// const HOST = '0.0.0.0';
-// const PORT =25742;
-// app.listen(PORT, HOST, () => {
-//     console.log(`Server running at http://${HOST}:${PORT}/`);
-// });
+const HOST = '0.0.0.0';
+const PORT =25742;
+app.listen(PORT, HOST, () => {
+    console.log(`Server running at http://${HOST}:${PORT}/`);
+});
 
 
 
